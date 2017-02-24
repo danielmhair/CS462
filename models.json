@@ -1,0 +1,111 @@
+/**
+ *  General Flow:
+ *  A call happens
+ *  Notes are taken
+ *  Lead is assigned
+ *  The person assigned get a notification for the appointment
+ *  It will notify someone if they missed the appointment (option)
+ * 
+ *  Creating a bid:
+ *  Set appointment
+ *  drag and drop items
+ *  send email with invoice
+ *
+ *  Focus on Service Industry
+ */
+
+/**
+  * ContactInfo
+  */
+ContactInfo: {
+  name: String,
+  address: {},
+	phone: Number,
+	email: String
+}
+
+
+/**
+  * Address
+  */
+Address: {
+	street: String,
+	city: String,
+	state: String,
+	zip: Number,
+	country: String
+}
+
+
+/**
+  * ContactInfo
+  */
+Company: {
+	contactInfo: {},
+	contacts: Contact[],
+  clients: Client[],
+  //comments: Note[]
+}
+
+/** Companies have Clients */
+Client: {
+  contactInfo: {},
+  contacts: Contact[],
+  comments: Note[],
+  transactions: Transaction[],
+  tickets: Ticket[],
+  bids: Bid[]
+}
+
+Contact: {
+	name: String,
+	phone: Number,
+	email: String
+}
+
+Note: {
+  date: Date,
+	note: String
+}
+
+Lead: {
+	contactInfo: {},
+  comments: String,
+	otherInfo: {}
+}
+
+Transactions: {
+	invoiceId: Number,
+	price: Number
+}
+
+Invoice: {
+	itemId: Number,
+	quantity: Number,
+	dateProcessed: Date,
+	comments: String
+}
+
+Item: {
+	//Item Info
+}
+
+/** Service on the customer */
+Ticket : {
+	title: String,
+	comment: String,
+	status: String,
+	deptConcerned: String
+}
+
+/** Quote */
+Bid : {
+	title: String,
+	desc: String,
+	price: Number,
+	location: Object,
+	status: String, //(“sent”, “accepted”, “assigned”)
+  assignee: String
+}
+
+

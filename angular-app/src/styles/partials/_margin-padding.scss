@@ -1,0 +1,147 @@
+/** General Padding Styles **/
+@for $amt from 1 through 50 {
+  $amtsize: $amt * 5;
+  // Positive Paddings
+  .padding-#{$amtsize} {
+    padding: #{$amtsize}px !important;
+  }
+  .padding-top-#{$amtsize} {
+    padding-top: #{$amtsize}px !important;
+  }
+  .padding-bottom-#{$amtsize} {
+    padding-bottom: #{$amtsize}px !important;
+  }
+  .padding-left-#{$amtsize} {
+    padding-left: #{$amtsize}px !important;
+  }
+  .padding-right-#{$amtsize} {
+    padding-right: #{$amtsize}px !important;
+  }
+  // Negative Paddings
+  .padding-top-neg-#{$amtsize} {
+    padding-top: -#{$amtsize}px !important;
+  }
+  .padding-bottom-neg-#{$amtsize} {
+    padding-bottom: -#{$amtsize}px !important;
+  }
+  .padding-left-neg-#{$amtsize} {
+    padding-left: -#{$amtsize}px !important;
+  }
+  .padding-right-neg-#{$amtsize} {
+    padding-right: -#{$amtsize}px !important;
+  }
+  // Positive Margins
+  .margin-#{$amtsize} {
+    margin: #{$amtsize}px !important;
+  }
+  .margin-top-#{$amtsize} {
+    margin-top: #{$amtsize}px !important;
+  }
+  .margin-bottom-#{$amtsize} {
+    margin-bottom: #{$amtsize}px !important;
+  }
+  .margin-left-#{$amtsize} {
+    margin-left: #{$amtsize}px !important;
+  }
+  .margin-right-#{$amtsize} {
+    margin-right: #{$amtsize}px !important;
+  }
+  // Negative Margins
+  .margin-top-neg-#{$amtsize} {
+    margin-top: -#{$amtsize}px !important;
+  }
+  .margin-bottom-neg-#{$amtsize} {
+    margin-bottom: -#{$amtsize}px !important;
+  }
+  .margin-left-neg-#{$amtsize} {
+    margin-left: -#{$amtsize}px !important;
+  }
+  .margin-right-neg-#{$amtsize} {
+    margin-right: -#{$amtsize}px !important;
+  }
+}
+
+@for $amt from 1 through 20 {
+  $amtsize: $amt;
+  .no-border-radius-top-#{$amtsize} {
+    border-radius: 0 0 #{$amtsize}px #{$amtsize}px;
+  }
+
+  .no-border-radius-bottom-#{$amtsize} {
+    border-radius: #{$amtsize}px #{$amtsize}px 0 0;
+  }
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-side-padding {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+.no-vertical-padding {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.padding {
+  padding: 10px !important;
+}
+
+.no-padding-top {
+  padding-top: 0 !important;
+}
+
+
+.no-padding-left {
+  padding-left: 0 !important;
+}
+
+.no-padding-right {
+  padding-right: 0 !important;
+}
+
+.no-padding-bottom {
+  padding-bottom: 0 !important;
+}
+
+/** General Margin Styles **/
+.no-margin {
+  margin: 0 !important;
+}
+
+.margin-auto {
+  margin: auto !important;
+}
+
+.no-side-margins {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+.no-vertical-margins {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.margin {
+  margin: 10px !important;
+}
+
+.no-margin-top {
+  margin-top: 0 !important;
+}
+
+.no-margin-bottom {
+  margin-bottom: 0 !important;
+}
+
+.no-margin-left {
+  margin-left: 0 !important;
+}
+
+.no-margin-right {
+  margin-right: 0 !important;
+}

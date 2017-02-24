@@ -1,0 +1,14 @@
+@import '~@angular/material/core/theming/all-theme';
+@import '~@angular/material/core/theming/theming';
+
+$primary: md-palette($md-indigo, 700, 500, 900);
+$accent:  md-palette($md-cyan, 700, 500, 900);
+$warn: md-palette($md-red, 700, 500, 900);
+$success: md-palette($md-green);
+$danger: md-palette($md-red);
+
+$text-primary: md-color($primary, 900, 1);
+$text-accent: md-color($accent, 900, 1);
+$text-warn: md-color($warn, 900, 1);
+$text-success: md-color($success, 900, 1);
+$text-danger: md-color($danger, 900, 1);

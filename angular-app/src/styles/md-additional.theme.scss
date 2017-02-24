@@ -1,0 +1,138 @@
+@import '~@angular/material/core/theming/theming';
+
+// https://material.io/guidelines/style/color.html#color-text-background-colors
+@mixin md-additional-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, warn);
+  $background: map-get($theme, background);
+  $foreground: map-get($theme, foreground);
+
+  $bg-primary: md-color($primary, 100, 0.3);
+  $bg-accent: md-color($accent, 100, 0.3);
+  $bg-warn: md-color($warn, 100, 0.3);
+
+  $text-primary: md-color($primary, 900, 1);
+  $text-accent: md-color($accent, 900, 1);
+  $text-warn: md-color($warn, 900, 1);
+
+  h1, h2, h3, h4, h5, h6, p, span, strong {
+    &.md-accent {
+      color: $text-accent;
+    }
+
+    &.md-primary {
+      color: $text-primary;
+    }
+
+    &.md-warn {
+      color: $text-warn;
+    }
+  }
+
+  div, .alert {
+    &.md-accent {
+      color: $text-accent;
+      background-color: $bg-accent;
+    }
+
+    &.md-primary {
+      color: $text-primary;
+      background-color: $bg-primary;
+    }
+
+    &.md-warn {
+      color: $text-warn;
+      background-color: $bg-warn;
+    }
+  }
+
+  .md-button-wrapper > md-icon.with-text {
+    top: 3px;
+    position: relative;
+  }
+
+  .md-button-wrapper > md-progress-spinner {
+    height: 30px;
+    width: 20px;
+    float: left;
+    top: 3px;
+    position: relative;
+    margin-right: 10px;
+    margin-left: 0;
+  }
+
+  button[md-raised-button] {
+    &.md-accent {
+      background-color: $text-accent;
+      color: white;
+    }
+
+    &.md-primary {
+      background-color: $text-primary;
+      color: white;
+    }
+
+    &.md-warn {
+      background-color: $text-warn;
+      color: white;
+    }
+  }
+
+  md-card, button[md-button], table, tr, td, th {
+    &.md-accent {
+      background-color: $bg-accent;
+      color: $text-accent;
+    }
+
+    &.md-primary {
+      background-color: $bg-primary;
+      color: $text-primary;
+    }
+
+    &.md-warn {
+      background-color: $bg-warn;
+      color: $text-warn;
+    }
+
+    &.no-depth {
+      box-shadow: none;
+    }
+  }
+
+  md-list md-list-item [md-line],
+  md-list a[md-list-item] [md-line],
+  md-nav-list md-list-item [md-line],
+  md-nav-list a[md-list-item] [md-line] {
+    overflow-x: initial !important;
+  }
+
+  md-list md-list-item [md-list-avatar],
+  md-list a[md-list-item]
+  [md-list-avatar],
+  md-nav-list md-list-item [md-list-avatar],
+  md-nav-list a[md-list-item] [md-list-avatar] {
+    padding-top: 8px;
+    margin-right: -10px;
+  }
+
+  md-card-content.center {
+    text-align: center;
+  }
+
+  img.avatar-md[md-card-avatar] {
+    height: 80px;
+    width: 80px;
+  }
+
+  md-input.center input.md-input-element {
+    text-align: center
+  }
+
+  md-icon.add {
+    position: relative;
+    top: 5px;
+  }
+
+
+}

@@ -1,0 +1,28 @@
+.icon {
+    position: relative;
+}
+
+.dmh-button-icon {}
+
+$size-list: 'xs' 'sm' 'md' 'lg' 'lg-2' 'xl' 'xxl' 'xxxl';
+$i: 0;
+@each $size in $size-list {
+  $amt-size: 0.75 + $i * 0.25;
+  .icon-#{$size},
+  .font-size-#{$size}{
+    font-size: #{$amt-size}em !important;
+  }
+
+  $length: 25 + $i * 5;
+  .dmh-button-#{$size} {
+    height: #{$length}px !important;
+    width: #{$length}px !important;
+  }
+
+  $line-height: 0 + ($i + 1) * 5;
+  [md-icon-button].dmh-button-#{$size} {
+    line-height: #{$line-height}px !important;
+  }
+
+  $i: $i + 1;
+}

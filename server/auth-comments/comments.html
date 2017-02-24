@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="angular.min.js"></script>
+    <script src="comments.controller.js"></script>
+</head>
+<body ng-app="myApp"  ng-controller="CommentsController">
+    <h1>Add a Comment</h1>
+    <h2>Go Ahead! Try!</h2>
+    <form id="commentForm" action="">
+      Name: <input type="text" id="Name" value="Mickey"><br>
+      Comment: <input type="text" id="Comment" value="Hello"><br>
+    </form>
+    <button ng-click="postComment()">Make a Comment</button>
+
+    <div id="json"></div>
+    <h3>Current comments:</h3>
+    <div id="currentCommentsAngular">
+        <ul>
+            <li ng-repeat="comment in comments"><strong>Name:</strong> {{comment.name}}, <strong>Comment:</strong> {{comment.comment}}</li>
+        </ul>
+    </div>
+</body>
+</html>

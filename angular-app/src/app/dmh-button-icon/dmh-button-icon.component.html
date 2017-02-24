@@ -1,0 +1,6 @@
+<button md-icon-button class="dmh-button-icon dmh-button-{{size}}"
+        type="button"
+        color="primary">
+  <md-icon *ngIf="contains('ti')" class="icon icon-{{size}} {{name}}"></md-icon>
+  <md-icon *ngIf="contains('fa')" class="icon icon-{{size}} fa {{name}}"></md-icon>
+</button>

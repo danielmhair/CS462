@@ -1,0 +1,40 @@
+<md-sidenav-container class="full-height">
+  <md-sidenav #menuRight align="end" mode="push">
+    <md-list>
+      <h3 md-subheader>{{ brand.name }}</h3>
+      <div *ngFor="let link of leftLinks">
+        <md-list-item *ngIf="!link.show || link.show(auth)"
+                      (click)="menuRight.close()"
+                      [routerLink]="link.internalLink">
+          <icon md-list-avatar [name]="link.iconPath" size="lg"></icon>
+          <h4 md-line>{{link.name}}</h4>
+        </md-list-item>
+      </div>
+      <md-divider></md-divider>
+      <div *ngFor="let link of rightLinks">
+        <md-list-item *ngIf="!link.show || link.show(link.showParam)"
+                      (click)="menuRight.close()"
+                      [routerLink]="link.internalLink">
+          <icon md-list-avatar [name]="link.iconPath" size="lg"></icon>
+          <h4 md-line>{{link.name}}</h4>
+        </md-list-item>
+      </div>
+    </md-list>
+  </md-sidenav>
+  <md-toolbar color="primary">
+    <a *ngIf="brand.internalLink" class="navbar-brand white col-lg-12" [routerLink]="[brand.internalLink]"
+       [routerLinkActive]="['active']">
+      <icon [name]="brand.iconPath" class="brand-icon" size="md"></icon>
+      <p class="float-left">
+        {{brand.name}}
+      </p>
+    </a>
+    <a *ngIf="!brand.internalLink" class="navbar-brand white" [href]="brand.externalLink">
+      {{brand.name}}
+    </a>
+    <!-- Collect the nav links, forms , and other content for toggling -->
+    <span class="fill"></span>
+    <button md-icon-button (click)="openMenu()"><md-icon>more_vert</md-icon></button>
+  </md-toolbar>
+  <ng-content></ng-content>
+</md-sidenav-container>

@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <md-card *ngIf="loginMessage" [class.md-primary]="intendedLogout" [class.md-accent]="!intendedLogout">
+      {{ loginMessage }}
+    </md-card>
+    <md-card class="no-margin-bottom" *ngIf="!loggedIn">
+      <md-card-title>Login</md-card-title>
+      <a href="javascript:;" style="text-decoration: none;"
+         (click)="loginWith('foursquare')">
+      
+        <dmh-button-icon
+          name="fa-foursquare"
+          size="xl"></dmh-button-icon> Login with Foursquare
+      </a>
+      <!--<dmh-button-icon (click)="loginWith('google')"-->
+      <!--name="fa-google"-->
+      <!--size="xl"></dmh-button-icon>-->
+      <!--<dmh-button-icon (click)="loginWith('facebook')"-->
+      <!--name="fa-facebook"-->
+      <!--size="xl"></dmh-button-icon>-->
+      <!--<dmh-button-icon (click)="loginWith('twitter')"-->
+      <!--name="fa-twitter"-->
+      <!--size="xl"></dmh-button-icon>-->
+    </md-card>
+    <md-card>
+      <md-card-title>{{ loggedIn ? "Profiles" : "Latest Checkin" }}</md-card-title>
+      <md-list *ngIf="users">
+        <md-list-item *ngFor="let user of users">
+          <a (click)="getUserInfo(user)" href="javascript:;">
+            {{ user.name }}
+          </a>
+        </md-list-item>
+      </md-list>
+    </md-card>
+    <md-card class="md-accent" *ngIf="!users">Loading profiles...</md-card>
+    <md-card class="md-accent" *ngIf="users && !user">Select a user above to see their latest checkin</md-card>
+    <md-card *ngIf="users && user">
+      <p>ID: {{ user.foursquare.id }}</p>
+      <p>First Name: {{ user.foursquare.firstName }}</p>
+      <p>Last Name: {{ user.foursquare.lastName }}</p>
+      <p>Latest Checkin{{ loggedIn ? user.foursquare.checkins.count > 0 ? "s (" + user.foursquare.checkins.count + "):" : " (0)" : ""}}</p>
+      <md-card *ngFor="let checkin of user.foursquare.checkins.items; let i = index">
+          <div *ngIf="loggedIn || i === 0">
+            <md-list-item>Checkin ID: {{ checkin.id }}</md-list-item>
+            <md-list-item>Checkin Venue: {{ checkin.venue.name }}</md-list-item>
+            <md-list-item>Checkin Address: {{ checkin.venue.location.address }}</md-list-item>
+          </div>
+      </md-card>
+    </md-card>
+  </div>
+</div>

@@ -1,0 +1,58 @@
+@import '../../styles/app.variables';
+
+:host {
+  z-index: 999;
+
+  a {
+    color: white;
+    line-height: 28px;
+
+    &:hover {
+      color: #d9edf7;
+    }
+
+    md-icon, icon {
+      margin-top: -3px;
+      font-size: 1em;
+
+      &.brand-icon {
+        float: left;
+        margin-right: 15px;
+      }
+    }
+
+    p {
+      float: left;
+      margin-top: -3px;
+    }
+
+    .nav-link .active {
+      background-color: rgba(255, 255, 255, 0.75);
+      color: black !important;
+    }
+
+    .nav-link {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+
+    &[md-button] {
+      &:hover {
+        color: black;
+        background-color: whitesmoke;
+        text-decoration: none;
+      }
+    }
+
+    &.navbar-brand {
+      height: 60px !important;
+      margin-top: 5px;
+    }
+  }
+
+  .navbar {
+    border-radius: 0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+}

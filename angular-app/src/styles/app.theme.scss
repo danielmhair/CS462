@@ -1,0 +1,16 @@
+// Variables for entire app
+@import 'app.variables';
+
+// Define a theme.
+
+// Include non-theme styles for core.
+@include md-core();
+
+$theme: md-light-theme($primary, $accent, $warn);
+
+// Include all theme styles for the components.
+@include angular-material-theme($theme);
+
+// https://material.io/guidelines/style/color.html#color-color-schemes
+@import 'md-additional.theme';
+@include md-additional-theme($theme);

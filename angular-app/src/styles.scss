@@ -1,0 +1,114 @@
+/* You can add global styles to this file, and also import other style files */
+// Partials
+@import './styles/partials/width';
+@import './styles/partials/margin-padding';
+@import './styles/partials/font-size';
+
+@import './styles/app.theme';
+
+// Override Bootstrap Theme
+$font-family-sans-serif:  "Helvetica Neue", Helvetica, Arial, sans-serif !default;
+$font-family-serif:       Georgia, "Times New Roman", Times, serif !default;
+$font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !default;
+$font-family-base:        $font-family-sans-serif !default;
+
+$brand-info:                md-color($accent) !default;
+$brand-primary:             md-color($primary) !default;
+$brand-warning:             md-color($warn) !default;
+$brand-success:             md-color($success) !default;
+$brand-danger:              md-color($danger) !default;
+
+$input-border-focus:        md-color($accent) !default;
+
+$state-success-text:        md-color($success, 900, 1) !default;
+$state-success-bg:          md-color($success, 100, 0.3) !default;
+$state-success-border:      darken(adjust-hue($state-success-bg, -10), 5%) !default;
+
+$state-info-text:           md-color($accent, 900, 1) !default;
+$state-info-bg:             md-color($accent, 100, 0.3) !default;
+$state-info-border:         darken(adjust-hue($state-info-bg, -10), 7%) !default;
+
+$state-warning-text:        md-color($warn, 900, 1) !default;
+$state-warning-bg:          md-color($warn, 100, 0.3) !default;
+$state-warning-border:      darken(adjust-hue($state-warning-bg, -10), 5%) !default;
+
+$state-danger-text:         md-color($danger, 900, 1) !default;
+$state-danger-bg:           md-color($danger, 100, 0.3) !default;
+$state-danger-border:       darken(adjust-hue($state-danger-bg, -10), 5%) !default;
+
+$code-color:                md-color($accent, 900, 1) !default;
+$code-bg:                   md-color($accent, 100, 0.3)  !default;
+$icon-font-path:            "~bootstrap-sass/assets/fonts/bootstrap/";
+
+@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+
+.fill {
+  // This fills the remaining space, by using flexbox.
+  // Every toolbar row uses a flexbox row layout.
+  flex: 1 1 auto;
+}
+
+.app-container {
+  margin-right: 25px;
+  margin-left: 25px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.full-height {
+  height: 100vh;
+}
+
+a, .clickable {
+  cursor: pointer;
+}
+
+.equal-panel-heights.col-lg-12.col-md-12.col-sm-12 {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.equal-panel-heights {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  flex:1 1 auto;
+}
+
+.center-vertical {
+  display: table;
+}
+
+.center-vertical h1,
+.center-vertical h2,
+.center-vertical h3,
+.center-vertical h4,
+.center-vertical h5,
+.center-vertical p {
+  vertical-align: middle;
+}
+
+.center-all {
+  display: table;
+  justify-content: center;
+  align-items: center;
+}
+
+.vcenter {
+  display: flex;
+  align-items: center;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.float-left {
+  float: left;
+}
+
+.float-right {
+  float: right;
+}
