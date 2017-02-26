@@ -60,9 +60,9 @@ exports.createRumorFromRumor = function(userId, rumor) {
     User.findById(userId, function(err, user) {
       if (err) return reject({ status: 500, message: err });
       if (!user) return reject({ status: 404, message: "Unable to get user" })
-      exists = user.rumors.filter(function(eaRumor) {
-        return eaRumor.messageId === rumor.messageId
-      }).length > 0;
+      var exists = user.rumors.filter(function(eaRumor) {
+          return eaRumor.messageId === rumor.messageId
+        }).length > 0;
       if (!exists) {
         user.rumors.push(rumor)
         user.save(function(err) {
@@ -103,13 +103,16 @@ exports.createRumorReq = function(req, res) {
   //if the message coming in is a rumor do something
   var rumor = req.body.rumor;
   var want = req.body.want;
-  var userId = req.params.userId;
+  var userId = req.params.id;
+  console.log("Getting user from id: " + userId);
   var resultPromise = null;
   if(rumor){
     resultPromise = exports.createRumorFromRumor(userId, rumor);
   } else if(want) {
     resultPromise = exports.resolveWant(userId, want);
   } else {
+    console.log("Creating rumor...");
+    console.log(req.body.message);
     resultPromise = exports.createRumorFromMessage(userId, req.body.message);
   }
   
@@ -385,5 +388,5 @@ function maxSequenceNumber(rumors, uuid) {
   return rumors
   .filter(function(rumor) { return rumor.messageId.split(":")[0] === uuid })
   .map(function(rumor) { return parseInt(rumor.messageId.split(":")[1]) })
-  .reduce(function(a,b) { return Math.max(a,b); })
+  .reduce(function(a,b) { return Math.max(a,b); }, [])
 }

@@ -3,25 +3,46 @@
     <md-card *ngIf="loginMessage" [class.md-primary]="intendedLogout" [class.md-accent]="!intendedLogout">
       {{ loginMessage }}
     </md-card>
-    <md-card class="no-margin-bottom" *ngIf="!loggedIn">
-      <md-card-title>Login</md-card-title>
-      <a href="javascript:;" style="text-decoration: none;"
-         (click)="loginWith('foursquare')">
-      
-        <dmh-button-icon
-          name="fa-foursquare"
-          size="xl"></dmh-button-icon> Login with Foursquare
-      </a>
-      <!--<dmh-button-icon (click)="loginWith('google')"-->
-      <!--name="fa-google"-->
-      <!--size="xl"></dmh-button-icon>-->
-      <!--<dmh-button-icon (click)="loginWith('facebook')"-->
-      <!--name="fa-facebook"-->
-      <!--size="xl"></dmh-button-icon>-->
-      <!--<dmh-button-icon (click)="loginWith('twitter')"-->
-      <!--name="fa-twitter"-->
-      <!--size="xl"></dmh-button-icon>-->
-    </md-card>
+    <div *ngIf="!loggedIn">
+      <md-card class="no-margin-bottom">
+        <md-card-title>Login</md-card-title>
+      </md-card>
+      <md-card class="no-margin-bottom">
+        <a href="javascript:;" style="text-decoration: none;"
+           (click)="loginWith('foursquare')">
+        
+          <dmh-button-icon
+            name="fa-foursquare"
+            size="xl"></dmh-button-icon> Login with Foursquare
+        </a>
+      </md-card>
+      <!--<md-card class="no-margin-bottom">-->
+        <!--<a href="javascript:;" style="text-decoration: none;"-->
+           <!--(click)="loginWith('google')">-->
+    <!---->
+          <!--<dmh-button-icon name="fa-google"-->
+                           <!--size="xl"></dmh-button-icon> Login with Google-->
+        <!--</a>-->
+      <!--</md-card>-->
+      <!--<md-card class="no-margin-bottom">-->
+        <!--<a href="javascript:;" style="text-decoration: none;"-->
+           <!--(click)="loginWith('facebook')">-->
+    <!---->
+          <!--<dmh-button-icon name="fa-facebook"-->
+                           <!--size="xl"></dmh-button-icon> Login with Facebook-->
+        <!--</a>-->
+      <!--</md-card>-->
+    <!---->
+      <!--<md-card class="no-margin-bottom">-->
+        <!--<a href="javascript:;" style="text-decoration: none;"-->
+           <!--(click)="loginWith('twitter')">-->
+    <!---->
+          <!--<dmh-button-icon name="fa-twitter"-->
+                           <!--size="xl"></dmh-button-icon> Login with Twitter-->
+        <!--</a>-->
+      <!--</md-card>-->
+    </div>
+    <rumors *ngIf="loggedIn"></rumors>
     <md-card>
       <md-card-title>{{ loggedIn ? "Profiles" : "Latest Checkin" }}</md-card-title>
       <md-list *ngIf="users">

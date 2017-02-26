@@ -20,10 +20,14 @@ import { LoginComponent } from './login/login.component';
 import { LogoutComponent } from './logout/logout.component';
 import { IconComponent } from './icon/icon.component'
 import { DmhButtonIconComponent } from './dmh-button-icon/dmh-button-icon.component'
+import { RumorsComponent } from "./rumors/rumors.component";
+
+
 // Services
 import { UserService } from './services';
 import { AuthHttp } from './services/auth-http.service';
-import {LoggedInGuard} from "./models/logged-in.guard";
+import { LoggedInGuard } from "./models/logged-in.guard";
+import { RumorsObservable } from "./services/rumors.service";
 
 export function newHttpService(backend: XHRBackend, defaultOptions: RequestOptions) {
   return new AuthHttp(backend, defaultOptions);
@@ -38,7 +42,8 @@ export function newHttpService(backend: XHRBackend, defaultOptions: RequestOptio
     LogoutComponent,
     IconComponent,
     DmhButtonIconComponent,
-],
+    RumorsComponent,
+  ],
   imports: [
     BrowserModule,
     CommonModule,
@@ -50,6 +55,7 @@ export function newHttpService(backend: XHRBackend, defaultOptions: RequestOptio
   ],
   providers: [
     LoggedInGuard,
+    RumorsObservable,
     { provide: UserService, useClass: UserService },
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     {

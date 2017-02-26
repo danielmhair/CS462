@@ -1,3 +1,5 @@
+import { Rumor } from './Rumor';
+
 export class User {
   _id: string;
   google_id: string;
@@ -9,6 +11,12 @@ export class User {
   google: any;
   twitter: any;
   facebook: any;
+
+  nodeEndpoint: string;
+  uuid: string;
+  neighbors: string[];
+  rumors: Rumor[];
+  seed: boolean;
 
   constructor(username: string, first_name?: string, last_name?: string, role?: string, google_id?: string, id?: string) {
     this._id = id ? id : null;
