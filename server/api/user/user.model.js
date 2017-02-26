@@ -4,7 +4,6 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var crypto = require('crypto');
 var authTypes = ['github', 'twitter', 'facebook', 'google', 'foursquare'];
-var uuid = require('node-uuid');
 
 var UserSchema = new Schema({
   name: String,
@@ -37,39 +36,6 @@ var UserSchema = new Schema({
   github: {},
   foursquare: {}
 });
-
-// seeds = [a, d] // Seeds get all other seeds as neighbors and all the previous seeds will obtain new seeds as neighbors
-// nonSeeds = [b,c,e] // Non seeds get one of the seeds as a neighbor
-//
-// let object = {
-//   a: [b,c,d],
-//   b: [a],
-//   c: [a],
-//   d: [a],
-//   e: [a|d]
-// }
-
-
-/**
- * Virtuals
- */
-UserSchema
-  .virtual('nodeEndpoint')
-  .set(function(nodeEndpoint) {
-    this.nodeEndpoint = "/api/users/" + this._id + "/rumors";
-  })
-  .get(function() {
-    return this.nodeEndpoint;
-  })
-
-UserSchema
-  .virtual('uuid')
-  .set(function(uuid) {
-    this.uuid = uuid.v4();
-  })
-  .get(function() {
-    return this.uuid;
-  })
 
 UserSchema
   .virtual('password')

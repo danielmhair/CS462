@@ -1,7 +1,11 @@
-exports.setup = function (User, config) {
-  var passport = require('passport');
-  var TwitterStrategy = require('passport-twitter').Strategy;
+var passport = require('passport');
+var TwitterStrategy = require('passport-twitter').Strategy;
+var uuid = require('node-uuid');
+var utils = require('../../utils')
+var UserController = require('../../api/user/user.controller');
 
+exports.setup = function (User, config) {
+  
   passport.use(new TwitterStrategy({
     consumerKey: config.twitter.clientID,
     consumerSecret: config.twitter.clientSecret,
@@ -24,12 +28,34 @@ exports.setup = function (User, config) {
           provider: 'twitter',
           twitter: profile._json
         });
-        user.save(function(err) {
-          if (err) return done(err);
-          done(err, user);
-        });
+        if (user._id && !user.nodeEndpoint) {
+          user.nodeEndpoint = "/api/users/" + user._id + "/rumors";
+        }
+        if (!user.uuid) {
+          user.uuid = uuid.v4();
+        }
+        if (utils.getRandom(0,5) % 3 == 0) {
+          user.seed = true;
+        }
+        UserController.addNeighborAndSave(user)
+        .then(function(results) {
+          console.log(results);
+          done(null, user);
+        })
+        .catch(function(err) {
+          done(err);
+        })
       } else {
         user.twitter = profile._json;
+        if (user._id && !user.nodeEndpoint) {
+          user.nodeEndpoint = "/api/users/" + user._id + "/rumors";
+        }
+        if (!user.uuid) {
+          user.uuid = uuid.v4();
+        }
+        if (utils.getRandom(0,5) % 3 == 0) {
+          user.seed = true;
+        }
         user.save(function(err) {
           if (err) return done(err);
           done(err, user);

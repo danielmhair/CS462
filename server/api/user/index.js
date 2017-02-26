@@ -15,8 +15,13 @@ router.put('/:id/password', controller.changePassword);
 router.get('/:id/rumors', controller.getRumors);
 router.get('/me', controller.me);
 
-router.post('/:id/rumors', controller.createRumor);
+router.post('/:id/rumors', controller.createRumorReq);
 router.post('/', controller.create);
 router.delete('/:id', controller.destroy);
+
+setInterval(function() {
+  console.log("Propagating Rumors")
+  controller.propagateRumors();
+}, 5000)
 
 module.exports = router;
