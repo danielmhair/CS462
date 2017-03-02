@@ -29,25 +29,25 @@ exports.getRumors = function(req, res) {
     if (!user) return res.status(404).send("Unable to get user");
     return res.status(200).json(user.rumors)
   });
-}
+};
 
 exports.resolveWant = function(userId, want) {
   return new Promise(function(resolve, reject) {
     User.findById(userId, function(err, userWithWant) {
       if (err) return reject({status: 500, message: err});
-      if (!userWithWant) return reject({status: 404, message: "Unable to get user"})
-      User.find({ nodeEndpoint: want.Endpoint }, function(err, userWithRumor) {
+      if (!userWithWant) return reject({status: 404, message: "Unable to get user"});
+      User.find({ nodeEndpoint: want.EndPoint }, function(err, userWithRumor) {
         var rumorsToAdd = userWithRumor.rumors
         .filter(function(rumor) {
-          var uuids = Object.keys(want.Want)
+          var uuids = Object.keys(want.Want);
           var messageIdParts = rumor.messageId.split(":");
-          var rumorUuid = messageIdParts[0]
-          var rumorSequence = messageIdParts[1]
+          var rumorUuid = messageIdParts[0];
+          var rumorSequence = messageIdParts[1];
           return rumorSequence > want.Want[rumorUuid];
         });
         userWithWant.rumors = userWithWant.rumors.concat(rumorsToAdd);
         userWithWant.save(function(err) {
-          if (err) return reject(err)
+          if (err) return reject(err);
           return resolve(rumorsToAdd)
         })
       })
@@ -64,9 +64,9 @@ exports.createRumorFromRumor = function(userId, rumor) {
           return eaRumor.messageId === rumor.messageId
         }).length > 0;
       if (!exists) {
-        user.rumors.push(rumor)
+        user.rumors.push(rumor);
         user.save(function(err) {
-          if (err) return reject(err)
+          if (err) return reject(err);
           return resolve(rumor)
         })
       } else {
@@ -74,30 +74,59 @@ exports.createRumorFromRumor = function(userId, rumor) {
       }
     });
   });
-}
+};
 
 exports.createRumorFromMessage = function(userId, message) {
   return new Promise(function(resolve, reject) {
     User.findById(userId, function(err, user) {
       if (err) return reject({ status: 500, message: err });
-      if (!user) return reject({ status: 404, message: "Unable to get user" })
-      var text = message
+      if (!user) return reject({ status: 404, message: "Unable to get user" });
+      var text = message;
       var originator = user.username;
       var maxSequenceNum = maxSequenceNumber(user.rumors, user.uuid);
       var messageId = user.uuid + ":" + (maxSequenceNum + 1);
       var rumor = {
-        messageId: messageId,
-        originator: originator,
-        text: text
+        Rumor: {
+          messageId: messageId,
+          originator: originator,
+          text: text
+        },
+        EndPoint: user.nodeEndpoint
       };
-      user.rumors.push(rumor)
+      user.rumors.push(rumor);
       user.save(function(err) {
-        if (err) return reject(err)
+        if (err) return reject(err);
         return resolve(rumor)
       });
     });
   })
 };
+
+function resolveRumor(userId, rumor) {
+  return new Promise(function(resolve, reject) {
+    var resultPromise = null;
+    User.findOne({ nodeEndpoint: rumor.EndPoint }, function(err, user) {
+      if (err) return reject(err);
+      if (!user) {
+        var newUser = new User({
+          name: rumor.Rumor.originator,
+          username: rumor.Rumor.originator,
+          seed: true,
+          rumors: [rumor],
+          nodeEndpoint: rumor.EndPoint,
+          neighbors: [],
+          uuid: rumor.Rumor.messageId.split(":")[0]
+        });
+        resultPromise = saveUser(newUser);
+      } else {
+        resultPromise = exports.createRumorFromRumor(userId, rumor);
+      }
+      resultPromise
+      .then(resolve)
+      .catch(reject)
+    });
+  });
+}
 
 exports.createRumorReq = function(req, res) {
   //if the message coming in is a rumor do something
@@ -107,8 +136,8 @@ exports.createRumorReq = function(req, res) {
   console.log("Getting user from id: " + userId);
   var resultPromise = null;
   if(rumor){
-    resultPromise = exports.createRumorFromRumor(userId, rumor);
-  } else if(want) {
+    resultPromise = resolveRumor(userId, rumor)
+  } else if (want) {
     resultPromise = exports.resolveWant(userId, want);
   } else {
     console.log("Creating rumor...");
@@ -141,7 +170,7 @@ exports.checkins = function(req, res) {
   var query = "?oauth_token=" + token + '&v=20170214';
   var completeURI = URI + query;
   getCheckins(completeURI, req.param("id")).then(function(data) {
-    console.log(data)
+    console.log(data);
     res.status(200).json(data)
   }).catch(function(err) {
     return res.status(500).json({ error: err })
@@ -160,11 +189,11 @@ function getCheckins(url, id) {
       resp.on('end', function(){
         json = JSON.parse(body);
         var checkins = json.response.checkins;
-        console.log(json)
-        console.log(checkins)
+        console.log(json);
+        console.log(checkins);
         User.findById(id, function(err, user) {
           if (err) return reject({ error: err });
-          user.checkins = checkins
+          user.checkins = checkins;
           resolve({user: user, checkins: checkins, json: json });
         })
       });
@@ -183,35 +212,35 @@ exports.addNeighborAndSave = function(newUser){
       // Put all the other seeds as its neighbors and give me to them as a neighbor
       User.find({ seed: true }, function(err, users) {
         if (err) return reject(err);
-        if (!users) return reject("Unable to get users.")
+        if (!users) return reject("Unable to get users.");
         
-        var operations = []
+        var operations = [];
         users.forEach(function(user) {
           if (newUser._id != user._id) {
             if (user.neighbors.indexOf(newUser._id) == -1) {
-              user.neighbors.push(newUser._id)
+              user.neighbors.push(newUser._id);
               operations.push(saveUser(user))
             }
             if (newUser.neighbors.indexOf(user._id) == -1) {
               //user not in neighbors
-              newUser.neighbors.push(user._id)
+              newUser.neighbors.push(user._id);
               operations.push(saveUser(newUser))
             }
           }
-        })
+        });
         
         Promise.all(operations)
         .then(function(results) {
-          console.log(results)
+          console.log(results);
           return resolve(results);
         })
         .catch(function(err) {
-          console.error(err)
+          console.error(err);
           return reject({ status: 500, err: err });
         })
       })
     } else {
-      console.log("Not a seed")
+      console.log("Not a seed");
       User.find({ seed: true}, function(err, users) {
         if (err) return reject({ status: 500, err: err });
         if (!users) return reject({ status: 404, err: "Unable to get users." })
@@ -219,7 +248,7 @@ exports.addNeighborAndSave = function(newUser){
         // Add one of the seeds as its neighbor
         if (users.length > 0) {
           var index = utils.getRandom(0, users.length);
-          var user = users[index]
+          var user = users[index];
           console.log(index);
           console.log(users);
           newUser.neighbors.push(user._id);
@@ -348,32 +377,42 @@ exports.propagateRumors = function() {
   User.find({}, function(err, users) {
     users.forEach(function(user) {
       if (user.neighbors.length > 0 && user.rumors.length > 0) {
-        var randomNeighborId = user.neighbors[utils.getRandom(0,user.neighbors.length)]
+        var randomNeighborId = user.neighbors[utils.getRandom(0,user.neighbors.length)];
+        const neighborUser = users.filter(function(neighbor) {
+          return neighbor._id === randomNeighborId
+        });
         if (utils.getRandom(0, 1) == 0) {
           // Prepare a rumor
-          var randomRumor = user.rumors[utils.getRandom(0, user.rumors.length)]
-          exports.createRumorFromRumor(randomNeighborId, randomRumor)
+          var randomRumor = user.rumors[utils.getRandom(0, user.rumors.length)];
+          // exports.createRumorFromRumor(randomNeighborId, randomRumor)
+          httpPost(neighborUser.nodeEndpoint, randomRumor)
           .catch(function(err) { console.error(err) })
         } else {
           // Prepare a want
-          var Want = {
-            "Want": {},
-            "Endpoint": user.nodeEndpoint
-          }
-          utils.uniqueItems(
-            user.rumors.map(function(rumor) { return parseInt(rumor.messageId.split(":")[0]) })
-          ).forEach(function(uuid) {
-            var maxSequenceNum = maxSequenceNumber(user.rumors, uuid)
-            Want.Want[uuid] = maxSequenceNum
-          });
-          
-          exports.resolveWant(randomNeighborId, Want)
+          const Want = prepareWant(user);
+          // exports.resolveWant(randomNeighborId, Want)
+          httpPost(neighborUser.nodeEndpoint, Want)
           .catch(function(err) { console.error(err) })
         }
       }
     })
   })
 };
+
+function prepareWant(user) {
+  var Want = {
+    "Want": {},
+    "EndPoint": user.nodeEndpoint
+  };
+  
+  utils.uniqueItems(
+    user.rumors.map(function(rumor) { return parseInt(rumor.messageId.split(":")[0]) })
+  ).forEach(function(uuid) {
+    Want.Want[uuid] = maxSequenceNumber(user.rumors, uuid);
+  });
+  
+  return Want;
+}
 
 function saveUser(user) {
   return new Promise(function(resolve, reject) {
@@ -389,4 +428,18 @@ function maxSequenceNumber(rumors, uuid) {
   .filter(function(rumor) { return rumor.messageId.split(":")[0] === uuid })
   .map(function(rumor) { return parseInt(rumor.messageId.split(":")[1]) })
   .reduce(function(a,b) { return Math.max(a,b); }, [])
+}
+
+function httpPost(url, body) {
+  return new Promise(function(resolve, reject) {
+    https.post(url, body, function(resp){
+      resp.on("error", function(err) {
+        return reject(err);
+      });
+      
+      resp.on("end", function() {
+        return resolve()
+      });
+    })
+  })
 }
